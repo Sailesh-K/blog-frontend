@@ -1,0 +1,288 @@
+* {
+  box-sizing: border-box;
+}
+
+a {
+  cursor: pointer;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #2c3e50;
+  margin: 0;
+  background-color: #ecf0f1;
+}
+
+img {
+  max-width: 100%;
+}
+
+main {
+  padding: 20px;
+  max-width: 960px;
+  margin: 20px auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  font-family: 'Playfair Display', serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 50px 0;
+  padding: 20px;
+  background-color: #000000;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+header a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header a.logo {
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+header nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+header nav a {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+header nav a:hover {
+  background-color: #2c3e50;
+}
+
+div.post {
+  display: grid;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+@media screen and (min-width: 768px) {
+  div.post {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+div.post div.texts h2 {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #000000;
+}
+
+div.post div.texts a {
+  text-decoration: none;
+  color: inherit;
+}
+
+div.post p.info {
+  margin: 10px 0;
+  font-family: 'Inter', sans-serif;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  gap: 10px;
+}
+
+div.post p.info a.author {
+  color: #34495e;
+}
+
+div.post p.summary {
+  margin: 15px 0;
+  line-height: 1.6rem;
+  font-family: 'Inter', sans-serif;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  display: block;
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #bdc3c7;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  font-family: 'Inter', sans-serif;
+}
+
+button {
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  background-color: #2980b9;
+  border: 0;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #21618c;
+}
+
+form h1 {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #34495e;
+}
+
+div.post-page div.image {
+  display: flex;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+div.post-page div.image img {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 10px;
+}
+
+div.post-page time {
+  display: block;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+div.post-page div.author {
+  margin: 20px 0;
+  font-family: 'Playfair Display', serif;
+  color: #2980b9;
+  font-weight: bold;
+}
+
+div.post-page div.content p {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7rem;
+  color: #2c3e50;
+}
+
+div.post-page div.edit-row {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+div.post-page a.edit-btn,
+div.post-page a.delete-btn{
+  background-color: #ecf0f1;
+  display: inline-flex;
+  color: #34495e;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+div.post-page a.edit-btn:hover,
+div.post-page a.delete-btn:hover {
+  background-color: #bdc3c7;
+}
+
+div.post-page a.like-btn {
+  background-color: #e74c3c; 
+  color: #fff;
+  padding: 12px 20px; 
+  border-radius: 8px; 
+  font-weight: bold; 
+  font-size: 1.2rem; 
+  display: inline-flex;
+  align-items: center; 
+  gap: 8px; 
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+}
+
+div.post-page a.like-btn:hover {
+  background-color: #c0392b; 
+  transform: translateY(-2px); 
+}
+
+
+a svg {
+  height: 24px;
+}
+
+.login-form {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 5px;
+  position: absolute;
+  top: -20px; 
+  left: 0;
+}
+
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
