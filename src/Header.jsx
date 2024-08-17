@@ -11,21 +11,21 @@ function Header(){
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/test", {
+        const response = await axios.get("https://blog-backend-74jb.onrender.com/api/test", {
           withCredentials: true
         });
         setUserInfo(response.data);
       } catch (error) {
         console.error("Failed to fetch user info:", error);
-        setUserInfo(null); 
+        //setUserInfo(null); 
       }
     };
     fetchUserInfo();
-  }, []);
+  }, [setUserInfo]);
 
   async function logout(){
     try {
-      await axios.post("http://localhost:3000/api/logout", {
+      await axios.post("https://blog-backend-74jb.onrender.com/api/logout", {
         withCredentials: true,
       });
       setUserInfo(null);
@@ -36,27 +36,25 @@ function Header(){
   
   const username=userInfo?.username;
 
-  return(
+  return (
     <header>
-      <Link to="/" className='logo'>Blog</Link>
+      <Link to="/" className="logo">MyBlog</Link>
       <nav>
-        {username ? (
+        {username && (
           <>
-            <span>Hello, {username}</span>
-            <Link to="/create">Create New Post</Link>
-            <a onClick={logout}>logout</a>
+            <Link to="/create">Create new post</Link>
+            <a onClick={logout}>Logout ({username})</a>
           </>
-        )
-
-        : (
+        )}
+        {!username && (
           <>
             <Link to="/login">Login</Link>
-            <Link to="/register">Sign Up</Link>
+            <Link to="/register">Register</Link>
           </>
         )}
       </nav>
     </header>
-    );
+  );
 }
 
 export default Header;

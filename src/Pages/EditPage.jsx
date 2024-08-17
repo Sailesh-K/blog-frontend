@@ -12,7 +12,7 @@ function EditPage(){
     const [redirect,setRedirect]=useState(false);
     
     useEffect(() => {
-        axios.get(`http://localhost:4000/post/${id}`)
+        axios.get(`https://blog-backend-74jb.onrender.com/api/post/${id}`,{withCredentials:true})
           .then(response => {
             const postInfo = response.data;
             setTitle(postInfo.title);
@@ -35,7 +35,7 @@ function EditPage(){
         if(files?.[0]){
             data.set('file',files?.[0]);
         }
-       const response=await axios.put(`http://localhost:3000/api/post`,data,{withCredentials:true})
+       const response=await axios.put(`https://blog-backend-74jb.onrender.com/api/post`,data,{withCredentials:true})
        if(response.status===200) setRedirect(true);
     }
 

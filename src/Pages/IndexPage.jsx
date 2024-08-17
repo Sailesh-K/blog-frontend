@@ -5,7 +5,7 @@ import axios from "axios";
 function IndexPage(){
     const [posts,setPosts]=useState([]);
     useEffect(()=>{
-        axios.get('http://localhost:3000/api/post')
+        axios.get('https://blog-backend-74jb.onrender.com/api/post',{withCredentials:true})
         .then(response=>{
             setPosts(response.data);
         });

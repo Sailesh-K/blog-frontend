@@ -30,7 +30,7 @@ function Register(){
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-                const response = await axios.post('http://localhost:3000/api/register', values, {
+                const response = await axios.post('https://blog-backend-74jb.onrender.com/api/register', values, {
                     headers: { 'Content-Type': 'application/json' }
                 });
                 if (response.status === 200) {

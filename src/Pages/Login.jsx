@@ -25,7 +25,7 @@ function Login() {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-                const response = await axios.post('http://localhost:3000/api/login', values, {
+                const response = await axios.post('https://blog-backend-74jb.onrender.com/api/login', values, {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true,
                 });
