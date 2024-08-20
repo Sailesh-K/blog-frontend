@@ -1,79 +1,60 @@
-import React, { useContext, useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import axios from "axios";
+import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Usercontext } from "../UserContext";
 
-function Login() {
-    const { setUserInfo } = useContext(Usercontext);
-    const [redirect, setRedirect] = useState(false);
+export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [redirect, setRedirect] = useState(false);
+  const { setUserInfo } = useContext(Usercontext);
 
-    const validationSchema = Yup.object({
-        email: Yup.string()
-            .email("Invalid email address")
-            .required("Email is required"),
-        password: Yup.string()
-            .required("Password is required"),
-    });
-
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-        },
-        validationSchema: validationSchema,
-        onSubmit: async (values) => {
-            try {
-                const response = await axios.post('https://blog-backend-74jb.onrender.com/api/login', values, {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true,
-                });
-                if (response.status === 200) {
-                    const userInfo = response.data;
-                    setUserInfo(userInfo);
-                    setRedirect(true);
-                } else {
-                    alert('Wrong credentials');
-                }
-            } catch (error) {
-                alert('Login failed. Please check your credentials.');
-            }
-        },
-    });
-
-    if (redirect) {
-        return <Navigate to="/" />;
+  useEffect(() => {
+    // Check if user info is already stored in localStorage
+    const storedUserInfo = localStorage.getItem("userInfo");
+    if (storedUserInfo) {
+      setUserInfo(JSON.parse(storedUserInfo));
+      setRedirect(true);  // Automatically redirect if user is already logged in
     }
+  }, [setUserInfo]);
 
-    return (
-        <form onSubmit={formik.handleSubmit}>
-            <h1>Login</h1>
-            <input
-                type="text"
-                placeholder="Email"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-            />
-            {formik.touched.email && formik.errors.email ? (
-                <div className="error-msg">{formik.errors.email}</div>
-            ) : null}
-            <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-            />
-            {formik.touched.password && formik.errors.password ? (
-                <div>{formik.errors.password}</div>
-            ) : null}
-            <button type="submit">Log in</button>
-        </form>
-    );
+  async function login(ev) {
+    ev.preventDefault();
+    const response = await fetch('https://blog-backend-74jb.onrender.com/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    if (response.ok) {
+      const userInfo = await response.json();
+      setUserInfo(userInfo);
+      localStorage.setItem("userInfo", JSON.stringify(userInfo)); // Save user info to localStorage
+      setRedirect(true);
+    } else {
+      alert('Wrong credentials. Please try again.');
+    }
+  }
+
+  if (redirect) {
+    return <Navigate to={'/indexpage'} />;
+  }
+
+  return (
+    <form className="login" onSubmit={login}>
+      <h1>Login</h1>
+      <input 
+        type="text"
+        placeholder="Email"
+        value={email}
+        onChange={ev => setEmail(ev.target.value)}
+      />
+      <input 
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={ev => setPassword(ev.target.value)}
+      />
+      <button>Login</button>
+    </form>
+  );
 }
-
-export default Login;
