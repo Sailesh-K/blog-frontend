@@ -9,11 +9,10 @@ export default function LoginPage() {
   const { setUserInfo } = useContext(Usercontext);
 
   useEffect(() => {
-    // Check if user info is already stored in localStorage
     const storedUserInfo = localStorage.getItem("userInfo");
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
-      setRedirect(true);  // Automatically redirect if user is already logged in
+      setRedirect(true);  
     }
   }, [setUserInfo]);
 
@@ -28,7 +27,7 @@ export default function LoginPage() {
     if (response.ok) {
       const userInfo = await response.json();
       setUserInfo(userInfo);
-      localStorage.setItem("userInfo", JSON.stringify(userInfo)); // Save user info to localStorage
+      localStorage.setItem("userInfo", JSON.stringify(userInfo)); 
       setRedirect(true);
     } else {
       alert('Wrong credentials. Please try again.');

@@ -50,7 +50,7 @@ function Register(){
     });
 
     if (redirect) {
-        return <Navigate to="/" />;
+        return <Navigate to="/indexpage" />;
     }
 
     return(

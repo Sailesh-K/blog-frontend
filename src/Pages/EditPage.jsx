@@ -1,64 +1,98 @@
-import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom"
-import Editor from "../Editor";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function EditPage(){
-    const {id}=useParams();
-    const [title,setTitle]=useState('');
-    const [summary,setSummary]=useState('');
-    const [content,setContent]=useState('');
-    const [files,setFiles]=useState('');
-    const [redirect,setRedirect]=useState(false);
-    
-    useEffect(() => {
-        axios.get(`https://blog-backend-74jb.onrender.com/api/post/${id}`,{withCredentials:true})
-          .then(response => {
-            const postInfo = response.data;
-            setTitle(postInfo.title);
-            setContent(postInfo.content);
-            setSummary(postInfo.summary);
-          })
-          .catch(error => {
-            console.error("Error fetching post data:", error);
-          });
-      }, []);
-    
-    
-    async function updatePost(e){
-        e.preventDefault();
-        const data=new FormData();
-        data.set('title',title);
-        data.set('summary',summary);
-        data.set('content',content);
-        data.set('id',id);
-        if(files?.[0]){
-            data.set('file',files?.[0]);
-        }
-       const response=await axios.put(`https://blog-backend-74jb.onrender.com/api/post`,data,{withCredentials:true})
-       if(response.status===200) setRedirect(true);
+const EditPost = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [content, setContent] = useState('');
+  const [file, setFile] = useState(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`https://blog-backend-74jb.onrender.com/api/post/${id}`);
+        const { title, summary, content } = response.data;
+        setTitle(title);
+        setSummary(summary);
+        setContent(content);
+      } catch (error) {
+        console.error('Error fetching post:', error);
+      }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('title', title);
+    formData.append('summary', summary);
+    formData.append('content', content);
+    if (file) {
+      formData.append('file', file);
     }
 
-    if(redirect){
-        return <Navigate to={"/post/"+id}/>
+    try {
+      const response = await axios.put(`https://localhost:3000/api/post/${id}`, formData, { withCredentials: true });
+      console.log('Post updated:', response.data);
+      navigate(`/post/${id}`);
+    } catch (error) {
+      console.error('Error updating post:', error);
     }
-    
-    return(
-        <form onSubmit={updatePost}>
-            <input type="title" 
-                   placeholder={'Title'}
-                   value={title}
-                   onChange={e=>setTitle(e.target.value)}/>
-            <input type="summary"
-                   placeholder={'Summary'}
-                   value={summary}
-                   onChange={e=>setSummary(e.target.value)}/>
-            <input type="file"
-                   onChange={e=>setFiles(e.target.files)}/>
-            <Editor value={content} onChange={setContent}/>
-            <button type="submit" style={{marginTop:'5px'}}>Update Post</button>
-        </form>
-    );
-}
+  };
 
-export default EditPage;
+  return (
+    <div>
+      <h1>Edit Post</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Title:</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Summary:</label>
+          <input
+            type="text"
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Content:</label>
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Cover Image:</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+          />
+        </div>
+        <button type="submit">Update Post</button>
+      </form>
+    </div>
+  );
+};
+
+export default EditPost;
