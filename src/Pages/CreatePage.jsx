@@ -8,7 +8,7 @@ function CreatePage() {
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [content, setContent] = useState('');
-  const [files, setFiles] = useState('');
+  const [file, setFile] = useState(null); // Change to handle a single file
   const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,8 +18,8 @@ function CreatePage() {
     data.set('title', title);
     data.set('summary', summary);
     data.set('content', content);
-    if (files) {
-      data.append('file', files[0]);
+    if (file) {
+      data.append('file', file); // Handling a single file upload
     }
 
     try {
@@ -61,7 +61,7 @@ function CreatePage() {
       />
       <input
         type="file"
-        onChange={e => setFiles(e.target.files)}
+        onChange={e => setFile(e.target.files[0])} // Handle a single file
       />
       <Editor
         value={content}
