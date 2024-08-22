@@ -44,7 +44,7 @@ const EditPost = () => {
     }
 
     try {
-      const response = await axios.put(`https://localhost:3000/api/post/${id}`, formData, { withCredentials: true });
+      const response = await axios.put(`https://blog-backend-74jb.onrender.com/api/post/${id}`, formData, { withCredentials: true });
       console.log('Post updated:', response.data);
       navigate(`/post/${id}`);
     } catch (error) {
