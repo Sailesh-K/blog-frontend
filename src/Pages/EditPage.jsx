@@ -14,7 +14,7 @@ const EditPost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`https://blog-backend-74jb.onrender.com/api/post/${id}`);
+        const response = await axios.get(`https://blog-backend-74jb.onrender.com/api/post/${id}`,{withCredentials:true});
         const { title, summary, content } = response.data;
         setTitle(title);
         setSummary(summary);
