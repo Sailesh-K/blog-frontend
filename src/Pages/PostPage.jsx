@@ -48,7 +48,7 @@ function PostPage(){
     }
 
     if(redirect){
-        return <Navigate to={"/"}/>
+        return <Navigate to={"/indexpage"}/>
     }
     
     if(!postInfo) return '';
