@@ -31,7 +31,8 @@ function Register(){
         onSubmit: async (values) => {
             try {
                 const response = await axios.post('https://blog-backend-74jb.onrender.com/api/register', values, {
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials:true
                 });
                 if (response.status === 200) {
                     const userInfo = response.data;
